@@ -1,11 +1,12 @@
 let currentInput = "";
 
+// Funcin para agregar un valor a la pantalla de visualizacion.
 function appendToDisplay(value) {
     const lastChar = currentInput.slice(-1);
 
-    // Verificar si el ultimo carcter es un operador y el valor actual es un operador
+    // Verifico si el ultimo caracter es un operador y el valor actual
     if ((value === '+' || value === '-' || value === '*' || value === '/') && (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/')) {
-        // No agregar otro operador consecutivo
+        // No agregar otro operador consecutivo.
         return;
     }
 
@@ -13,21 +14,23 @@ function appendToDisplay(value) {
     document.getElementById('display').value = currentInput;
 }
 
+// Funcion para borrar la pantlla de visualizacion y restablecer la entrada
 function clearDisplay() {
     currentInput = "";
     document.getElementById('display').value = "";
 }
 
+// Funcion para calcular el resultado de la expresion ingresada
 function calculateResult() {
     const lastChar = currentInput.slice(-1);
     
-    // Verificar si el último caracter es un nmero antes de calcular
+    // Verifico si el ultimo caracter es un numero antes de calcular
     if (isNumber(lastChar)) {
         let result = 0;
         let operators = [];
         let numbers = [];
 
-        // Obtener los operadores y numeros de la entrada
+        // Obtengo los operadores y numeros de entrada
         currentInput.split(/([+\-*/])/).forEach((item) => {
             if (item === '+' || item === '-' || item === '*' || item === '/') {
                 operators.push(item);
@@ -36,7 +39,6 @@ function calculateResult() {
             }
         });
 
-        
         while (operators.includes('*') || operators.includes('/')) {
             for (let i = 0; i < operators.length; i++) {
                 if (operators[i] === '*' || operators[i] === '/') {
@@ -57,7 +59,6 @@ function calculateResult() {
             }
         }
 
-        
         for (let i = 0; i < operators.length; i++) {
             if (operators[i] === '+') {
                 numbers[i] += numbers[i + 1];
@@ -72,16 +73,18 @@ function calculateResult() {
     }
 }
 
+// Funcion para vereficar si un caracter es un numer
 function isNumber(char) {
-    
     return !isNaN(parseFloat(char)) && isFinite(char);
 }
 
+// Funcion para borrar el ultimo caracter de la entrada actual
 function backspace() {
     currentInput = currentInput.slice(0, -1);
     document.getElementById('display').value = currentInput;
 }
 
+// Funcion para elevar al cuadrado el valor de la entrada actual
 function power() {
     try {
         const value = eval(currentInput);
